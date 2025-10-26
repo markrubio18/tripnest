@@ -13,14 +13,12 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/firebase/firebase-ios-sdk.git", .upToNextMajor(from: "8.10.0")),
+        // Dependencies will be added here
     ],
     targets: [
         .executableTarget(
             name: "TripNest",
-            dependencies: [
-                .product(name: "FirebaseAuth", package: "firebase-ios-sdk"),
-            ]
+            dependencies: []
         ),
         .testTarget(
             name: "TripNestTests",

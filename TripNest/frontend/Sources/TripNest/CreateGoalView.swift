@@ -33,12 +33,12 @@ struct CreateGoalView: View {
     }
 
     func createGroupAndGoal() {
-        NetworkManager.shared.createGroup(name: groupName, description: "") { group in
+        DataManager.shared.createGroup(name: groupName, description: "") { group in
             guard let group = group else { return }
 
             let targetAmount = Double(goalAmount) ?? 0
 
-            NetworkManager.shared.createGoal(name: goalName, targetAmount: targetAmount, targetDate: goalDate, groupId: group.id) { goal in
+            DataManager.shared.createGoal(name: goalName, targetAmount: targetAmount, targetDate: goalDate, groupId: group.id) { goal in
                 if goal != nil {
                     presentationMode.wrappedValue.dismiss()
                 }

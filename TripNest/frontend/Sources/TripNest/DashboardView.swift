@@ -32,7 +32,7 @@ struct DashboardView: View {
     }
 
     func loadGroups() {
-        NetworkManager.shared.getGroups { fetchedGroups in
+        DataManager.shared.getGroups { fetchedGroups in
             if let fetchedGroups = fetchedGroups {
                 DispatchQueue.main.async {
                     self.groups = fetchedGroups

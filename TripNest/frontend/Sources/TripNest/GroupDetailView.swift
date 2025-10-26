@@ -1,7 +1,8 @@
 import SwiftUI
 
 struct GroupDetailView: View {
-    let group: Group
+    @State var group: Group
+    @State private var showingAddContributionView = false
 
     var body: some View {
         VStack {
@@ -14,11 +15,32 @@ struct GroupDetailView: View {
 
             ChatView()
 
-            MembersListView(members: group.members ?? [])
+            MembersListView(group: group)
 
             Spacer()
         }
         .navigationTitle("Group Details")
+        .toolbar {
+            Button(action: {
+                showingAddContributionView = true
+            }) {
+                Image(systemName: "plus")
+            }
+        }
+        .sheet(isPresented: $showingAddContributionView, onDismiss: reloadGroup) {
+            AddContributionView(goalId: group.goal?.id ?? 0)
+        }
+        .onAppear(perform: reloadGroup)
+    }
+
+    private func reloadGroup() {
+        // In a real app, you might fetch the latest group data here.
+        // For the local version, we can just reload from the DataManager.
+        DataManager.shared.getGroups { groups in
+            if let updatedGroup = groups?.first(where: { $0.id == self.group.id }) {
+                self.group = updatedGroup
+            }
+        }
     }
 }
 
@@ -52,24 +74,27 @@ struct ChatView: View {
 }
 
 struct MembersListView: View {
-    let members: [User]
+    let group: Group
 
     var body: some View {
         VStack {
             Text("Members")
                 .font(.title2)
                 .fontWeight(.semibold)
-            ForEach(members, id: \.id) { member in
+            ForEach(group.members ?? [], id: \.id) { member in
                 HStack {
                     Text(member.fullName ?? "No Name")
                     Spacer()
-                    // Placeholder for contribution amount
-                    Text("$0")
+                    Text("$\(contribution(for: member), specifier: "%.2f")")
                 }
                 .padding(.horizontal)
             }
         }
         .padding()
+    }
+
+    private func contribution(for member: User) -> Double {
+        return group.goal?.contributions?.filter { $0.userId == member.id }.reduce(0) { $0 + $1.amount } ?? 0
     }
 }
 

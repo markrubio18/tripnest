@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "name": "Japan 2026 – Sakura Trip 🌸",
+    "description": "A trip to see the cherry blossoms.",
+    "ownerId": 1,
+    "goal": {
+      "id": 1,
+      "name": "Japan 2026 – Sakura Trip 🌸",
+      "targetAmount": 5000.0,
+      "targetDate": "2026-04-01T00:00:00Z",
+      "groupId": 1,
+      "contributions": [
+        { "id": 1, "amount": 800.0, "timestamp": "2025-10-26T01:00:00Z", "userId": 1, "goalId": 1 },
+        { "id": 2, "amount": 800.0, "timestamp": "2025-10-26T01:00:00Z", "userId": 2, "goalId": 1 },
+        { "id": 3, "amount": 800.0, "timestamp": "2025-10-26T01:00:00Z", "userId": 3, "goalId": 1 },
+        { "id": 4, "amount": 800.0, "timestamp": "2025-10-26T01:00:00Z", "userId": 4, "goalId": 1 },
+        { "id": 5, "amount": 800.0, "timestamp": "2025-10-26T01:00:00Z", "userId": 5, "goalId": 1 }
+      ]
+    },
+    "members": [
+      { "id": 1, "firebaseUid": "user1_uid", "email": "user1@example.com", "fullName": "You", "isActive": true, "fcmToken": null },
+      { "id": 2, "firebaseUid": "user2_uid", "email": "user2@example.com", "fullName": "Alice", "isActive": true, "fcmToken": null },
+      { "id": 3, "firebaseUid": "user3_uid", "email": "user3@example.com", "fullName": "Bob", "isActive": true, "fcmToken": null },
+      { "id": 4, "firebaseUid": "user4_uid", "email": "user4@example.com", "fullName": "Charlie", "isActive": true, "fcmToken": null },
+      { "id": 5, "firebaseUid": "user5_uid", "email": "user5@example.com", "fullName": "Diana", "isActive": true, "fcmToken": null }
+    ],
+    "currentBalance": 4000.0,
+    "projectedYield": 200.0,
+    "estimatedFinalBalance": 4200.0
+  },
+  {
+    "id": 2,
+    "name": "Group Gift for Alex",
+    "description": "Surprise birthday gift.",
+    "ownerId": 1,
+    "goal": {
+      "id": 2,
+      "name": "Group Gift for Alex",
+      "targetAmount": 500.0,
+      "targetDate": "2025-12-01T00:00:00Z",
+      "groupId": 2,
+      "contributions": [
+        { "id": 6, "amount": 125.0, "timestamp": "2025-10-26T01:00:00Z", "userId": 1, "goalId": 2 },
+        { "id": 7, "amount": 125.0, "timestamp": "2025-10-26T01:00:00Z", "userId": 6, "goalId": 2 }
+      ]
+    },
+    "members": [
+      { "id": 1, "firebaseUid": "user1_uid", "email": "user1@example.com", "fullName": "You", "isActive": true, "fcmToken": null },
+      { "id": 6, "firebaseUid": "user6_uid", "email": "user6@example.com", "fullName": "Eve", "isActive": true, "fcmToken": null }
+    ],
+    "currentBalance": 250.0,
+    "projectedYield": 5.0,
+    "estimatedFinalBalance": 255.0
+  }
+]
