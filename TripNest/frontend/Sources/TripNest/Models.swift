@@ -37,3 +37,12 @@ struct Contribution: Codable, Identifiable {
     let userId: Int
     let goalId: Int
 }
+
+struct Message: Codable, Identifiable {
+    let id: Int
+    let text: String
+    let timestamp: Date
+    let userId: Int
+    let groupId: Int
+    let user: User
+}

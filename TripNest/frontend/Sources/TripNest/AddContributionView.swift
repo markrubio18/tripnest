@@ -21,8 +21,11 @@ struct AddContributionView: View {
 
     func saveContribution() {
         let contributionAmount = Double(amount) ?? 0
-        DataManager.shared.addContribution(goalId: goalId, amount: contributionAmount)
-        presentationMode.wrappedValue.dismiss()
+        NetworkManager.shared.addContribution(goalId: goalId, amount: contributionAmount) { contribution in
+            if contribution != nil {
+                presentationMode.wrappedValue.dismiss()
+            }
+        }
     }
 }
 

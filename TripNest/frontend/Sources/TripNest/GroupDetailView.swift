@@ -13,7 +13,7 @@ struct GroupDetailView: View {
 
             SavingsSummaryView(group: group)
 
-            ChatView()
+            ChatView(group: group)
 
             MembersListView(group: group)
 
@@ -34,9 +34,7 @@ struct GroupDetailView: View {
     }
 
     private func reloadGroup() {
-        // In a real app, you might fetch the latest group data here.
-        // For the local version, we can just reload from the DataManager.
-        DataManager.shared.getGroups { groups in
+        NetworkManager.shared.getGroups { groups in
             if let updatedGroup = groups?.first(where: { $0.id == self.group.id }) {
                 self.group = updatedGroup
             }
@@ -62,13 +60,8 @@ struct SavingsSummaryView: View {
 
 struct ChatView: View {
     @State private var newMessage = ""
-
-    // Mock messages
-    let messages = [
-        "Alice: Hey everyone! So excited for this trip!",
-        "You: Me too! It's going to be amazing.",
-        "Bob: Has anyone started looking at flights yet?"
-    ]
+    @State private var messages: [Message] = []
+    let group: Group
 
     var body: some View {
         VStack {
@@ -78,28 +71,45 @@ struct ChatView: View {
 
             ScrollView {
                 VStack(alignment: .leading, spacing: 10) {
-                    ForEach(messages, id: \.self) { message in
-                        Text(message)
+                    ForEach(messages) { message in
+                        Text("\(message.user.fullName ?? "User"): \(message.text)")
                     }
                 }
             }
             .padding()
             .background(Color(.systemGray6))
             .cornerRadius(10)
+            .onAppear(perform: loadMessages)
 
             HStack {
                 TextField("Type a message...", text: $newMessage)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
 
-                Button(action: {
-                    // Simulate sending a message
-                    newMessage = ""
-                }) {
+                Button(action: sendMessage) {
                     Text("Send")
                 }
             }
         }
         .padding()
+    }
+
+    private func loadMessages() {
+        NetworkManager.shared.getMessages(groupId: group.id) { fetchedMessages in
+            if let fetchedMessages = fetchedMessages {
+                DispatchQueue.main.async {
+                    self.messages = fetchedMessages
+                }
+            }
+        }
+    }
+
+    private func sendMessage() {
+        NetworkManager.shared.createMessage(groupId: group.id, text: newMessage) { message in
+            if message != nil {
+                newMessage = ""
+                loadMessages()
+            }
+        }
     }
 }
 

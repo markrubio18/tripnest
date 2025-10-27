@@ -34,18 +34,19 @@ struct CreateGoalView: View {
             }
         }
         .sheet(isPresented: $showingInviteFriendsView) {
-            InviteFriendsView()
+            // This is a placeholder. In a real app, you'd likely invite after the group is created.
+            InviteFriendsView(groupId: 0)
         }
         .navigationTitle("Create New Goal")
     }
 
     func createGroupAndGoal() {
-        DataManager.shared.createGroup(name: groupName, description: "") { group in
+        NetworkManager.shared.createGroup(name: groupName, description: "") { group in
             guard let group = group else { return }
 
             let targetAmount = Double(goalAmount) ?? 0
 
-            DataManager.shared.createGoal(name: goalName, targetAmount: targetAmount, targetDate: goalDate, groupId: group.id) { goal in
+            NetworkManager.shared.createGoal(name: goalName, targetAmount: targetAmount, targetDate: goalDate, groupId: group.id) { goal in
                 if goal != nil {
                     presentationMode.wrappedValue.dismiss()
                 }
