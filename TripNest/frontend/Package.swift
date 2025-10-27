@@ -18,7 +18,10 @@ let package = Package(
     targets: [
         .executableTarget(
             name: "TripNest",
-            dependencies: []
+            dependencies: [],
+            resources: [
+                .process("Resources")
+            ]
         ),
         .testTarget(
             name: "TripNestTests",

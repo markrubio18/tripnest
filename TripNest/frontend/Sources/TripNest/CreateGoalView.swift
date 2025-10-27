@@ -5,6 +5,7 @@ struct CreateGoalView: View {
     @State private var goalName = ""
     @State private var goalAmount = ""
     @State private var goalDate = Date()
+    @State private var showingInviteFriendsView = false
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
@@ -21,13 +22,19 @@ struct CreateGoalView: View {
             }
 
             Section(header: Text("Invite Friends")) {
-                // Placeholder for inviting friends
-                Text("Invite friends via link, contacts, or QR code.")
+                Button(action: {
+                    showingInviteFriendsView = true
+                }) {
+                    Text("Invite Friends")
+                }
             }
 
             Button(action: createGroupAndGoal) {
                 Text("Create Goal")
             }
+        }
+        .sheet(isPresented: $showingInviteFriendsView) {
+            InviteFriendsView()
         }
         .navigationTitle("Create New Goal")
     }

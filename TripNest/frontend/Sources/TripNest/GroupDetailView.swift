@@ -61,13 +61,43 @@ struct SavingsSummaryView: View {
 }
 
 struct ChatView: View {
+    @State private var newMessage = ""
+
+    // Mock messages
+    let messages = [
+        "Alice: Hey everyone! So excited for this trip!",
+        "You: Me too! It's going to be amazing.",
+        "Bob: Has anyone started looking at flights yet?"
+    ]
+
     var body: some View {
         VStack {
             Text("Group Chat")
                 .font(.title2)
                 .fontWeight(.semibold)
-            // Placeholder for chat
-            Text("No messages yet.")
+
+            ScrollView {
+                VStack(alignment: .leading, spacing: 10) {
+                    ForEach(messages, id: \.self) { message in
+                        Text(message)
+                    }
+                }
+            }
+            .padding()
+            .background(Color(.systemGray6))
+            .cornerRadius(10)
+
+            HStack {
+                TextField("Type a message...", text: $newMessage)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+
+                Button(action: {
+                    // Simulate sending a message
+                    newMessage = ""
+                }) {
+                    Text("Send")
+                }
+            }
         }
         .padding()
     }
